@@ -228,9 +228,7 @@
                 <div class="dropdown-menu" id="dropdownMenu">
                     <div class="dropdown-header">Equipos y Catálogos</div>
                     <a href="#">Ver Inventario</a>
-                    <a href="#">Nuevo Equipo</a>
-                    <!--<a href="#">Nueva Marca</a>-->
-                    <!--ruta de nueva marca-->
+                    <a href="{{ route('equipo.index') }}">Nuevo Equipo</a>
                     <a href="{{ route('marcas.create') }}">Nueva Marca</a>
                     <a href="{{ route('modelos.create') }}">Nuevo Modelo</a>
                     <a href="{{ route('categorias.create') }}">Nueva Categoría</a>
@@ -243,6 +241,7 @@
                     <div class="dropdown-divider"></div>
                     <div class="dropdown-header">Gestión</div>
                     <a href="#">Mantenimiento</a>
+                      <a href="{{ route('tipo_mantenimiento.create') }}"> Tipo de Mantenimiento</a>
                     <a href="#">Reportería</a>
                 </div>
             </div>

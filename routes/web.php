@@ -8,6 +8,9 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\AfiliadoController;
 use App\Http\Controllers\PuestoController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\TipoMantenimientoController;
+use App\Http\Controllers\EquipoController;
+
 
 Route::get('/', function () {
    return view('auth.login');
@@ -59,6 +62,26 @@ Route::middleware('auth')->group(function () {
     Route::put('/empleados/actualizar/{id}', [EmpleadoController::class, 'update'])->name('empleados.update'); 
     // Rutas para eliminar empleados
     Route::delete('/empleados/eliminar/{id}', [EmpleadoController::class, 'destroy'])->name('empleados.destroy');   
+
+    //Rutas para nuevo tipo de mantenimiento
+   Route::middleware('auth')->group(function () {
+
+    // Rutas para Tipo de Mantenimiento
+    Route::get('/tipo-mantenimiento/nuevo', [TipoMantenimientoController::class, 'create'])->name('tipo_mantenimiento.create');
+    Route::post('/tipo-mantenimiento/guardar', [TipoMantenimientoController::class, 'store'])->name('tipo_mantenimiento.store');
+    Route::get('/tipo-mantenimiento/{id}/editar', [TipoMantenimientoController::class, 'edit'])->name('tipo_mantenimiento.edit');
+    Route::put('/tipo-mantenimiento/{id}/actualizar', [TipoMantenimientoController::class, 'update'])->name('tipo_mantenimiento.update');
+    Route::delete('/tipo-mantenimiento/{id}/eliminar', [TipoMantenimientoController::class, 'destroy'])->name('tipo_mantenimiento.destroy');
+
+    // Rutas para Equipo
+    Route::get('/equipo', [EquipoController::class, 'index'])->name('equipo.index');
+    Route::post('/equipo', [EquipoController::class, 'store'])->name('equipo.store');
+    Route::get('/equipo/{id}/editar', [EquipoController::class, 'edit'])->name('equipo.edit');
+    Route::put('/equipo/{id}', [EquipoController::class, 'update'])->name('equipo.update');
+    Route::delete('/equipo/{id}', [EquipoController::class, 'destroy'])->name('equipo.destroy');
+    Route::get('/equipo/{id}/imagen', [EquipoController::class, 'mostrarImagen'])->name('equipo.imagen');
+
+});
 
 
 });

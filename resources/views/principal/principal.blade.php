@@ -232,9 +232,8 @@
                     <!--<a href="#">Nueva Marca</a>-->
                     <!--ruta de nueva marca-->
                     <a href="{{ route('marcas.create') }}">Nueva Marca</a>
-                    <a href="#">Nuevo Modelo</a>
-                    <a href="#">Nueva Categoría</a>
-
+                    <a href="{{ route('modelos.create') }}">Nuevo Modelo</a>
+                    <a href="{{ route('categorias.create') }}">Nueva Categoría</a>
                     <div class="dropdown-divider"></div>
                     <div class="dropdown-header">Personal</div>
                     <a href="#">Empleados</a>
@@ -247,7 +246,7 @@
                 </div>
             </div>
 
-            <h1>Sistema de Gestión de Activos</h1>
+            <h1>Sistema de Activos TI</h1>
         </div>
 
         <!-- Lado Derecho: Botón de Nuevo Usuario y Cerrar Sesión -->
@@ -270,8 +269,8 @@
 
     <!-- Banner con Imagen de Computadoras -->
     <div class="hero-banner">
-        <h2>Control y Administración de Equipos</h2>
-        <p>Gestiona los activos de cómputo, licencias y usuarios de tu organización de forma eficiente.</p>
+        <h2>Control de Equipos</h2>
+        <p>Fundación Hábitat para La Humanidad Guatemala</p>
     </div>
 
     <!-- Script para abrir/cerrar el menú desplegable -->

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\ModeloController;
+use App\Http\Controllers\CategoriaController;
 
 Route::get('/', function () {
    return view('auth.login');
@@ -29,6 +31,16 @@ Route::middleware('auth')->group(function () {
     //Rutas para nueva marca
     Route::get('/marcas/nueva', [MarcaController::class, 'create'])->name('marcas.create');
     Route::post('/marcas/guardar', [MarcaController::class, 'store'])->name('marcas.store');
+
+    //Rutas para nuevo modelo
+    Route::get('/modelos/nuevo', [ModeloController::class, 'create'])->name('modelos.create');
+    Route::post('/modelos/guardar', [ModeloController::class, 'store'])->name('modelos.store');
+
+    //Rutas para nueva categoría
+    Route::get('/categorias/nueva', [CategoriaController::class, 'create'])->name('categorias.create');
+    Route::post('/categorias/guardar', [CategoriaController::   class, 'store'])->name('categorias.store'); 
+
+
 });
 
 

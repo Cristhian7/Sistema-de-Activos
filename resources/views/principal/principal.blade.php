@@ -236,8 +236,9 @@
                     <a href="{{ route('categorias.create') }}">Nueva Categoría</a>
                     <div class="dropdown-divider"></div>
                     <div class="dropdown-header">Personal</div>
-                    <a href="#">Empleados</a>
-                    <a href="#">Puestos</a>
+                    <a href="{{ route('empleados.create') }}">Nuevo Empleado</a>
+                       <a href="{{ route('puestos.create') }}">Puesto</a>
+                    <a href="{{ route('afiliados.create') }}">Afiliado</a>
 
                     <div class="dropdown-divider"></div>
                     <div class="dropdown-header">Gestión</div>
@@ -251,7 +252,7 @@
 
         <!-- Lado Derecho: Botón de Nuevo Usuario y Cerrar Sesión -->
         <div class="nav-right">
-            <a href="{{ route('usuarios.create') }}" class="btn btn-primary">+ Nuevo Usuario</a>
+            <a href="{{ route('usuarios.create') }}" class="btn btn-primary">Nuevo Usuario</a>
             
             <form action="{{ route('logout') }}" method="POST" style="display:inline;">
                 @csrf

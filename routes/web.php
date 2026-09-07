@@ -5,6 +5,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\AfiliadoController;
+use App\Http\Controllers\PuestoController;
+use App\Http\Controllers\EmpleadoController;
 
 Route::get('/', function () {
    return view('auth.login');
@@ -39,6 +42,23 @@ Route::middleware('auth')->group(function () {
     //Rutas para nueva categoría
     Route::get('/categorias/nueva', [CategoriaController::class, 'create'])->name('categorias.create');
     Route::post('/categorias/guardar', [CategoriaController::   class, 'store'])->name('categorias.store'); 
+
+    //Rutas para nuevo afiliado
+    Route::get('/afiliados/nuevo', [AfiliadoController::class, 'create'])->name('afiliados.create');
+    Route::post('/afiliados/guardar', [AfiliadoController::class, 'store'])->name('afiliados.store');
+
+    //Rutas para nuevo puesto
+    Route::get('/puestos/nuevo', [PuestoController::class, 'create'])->name('puestos.create');
+    Route::post('/puestos/guardar', [PuestoController::class, 'store'])->name('puestos.store');
+
+    //Rutas para nuevo empleado
+    Route::get('/empleados/nuevo', [EmpleadoController::class, 'create'])->name('empleados.create');
+    Route::post('/empleados/guardar', [EmpleadoController::class, 'store'])->name('empleados.store');
+    // Rutas para editar y actualizar empleados
+    Route::get('/empleados/editar/{id}', [EmpleadoController::class, 'edit'])->name('empleados.edit');
+    Route::put('/empleados/actualizar/{id}', [EmpleadoController::class, 'update'])->name('empleados.update'); 
+    // Rutas para eliminar empleados
+    Route::delete('/empleados/eliminar/{id}', [EmpleadoController::class, 'destroy'])->name('empleados.destroy');   
 
 
 });

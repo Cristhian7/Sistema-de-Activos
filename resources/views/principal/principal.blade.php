@@ -27,20 +27,28 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
+        /* Lado izquierdo: Menú desplegable + Título */
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
         .navbar h1 {
             font-size: 20px;
             color: #1e293b;
             font-weight: 700;
         }
 
-        .actions {
+        /* Lado derecho: Botones directos */
+        .nav-right {
             display: flex;
-            gap: 12px;
             align-items: center;
+            gap: 12px;
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: 8px;
             font-weight: 600;
             text-decoration: none;
@@ -53,7 +61,7 @@
         .btn-primary {
             background-color: #4f46e5;
             color: white;
-            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.25);
         }
 
         .btn-primary:hover {
@@ -70,7 +78,94 @@
             background-color: #dc2626;
         }
 
-        /* Contenedor principal con imagen de fondo */
+        /* Estilos del Menú Desplegable (Lado Izquierdo) */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            background-color: #f1f5f9;
+            color: #334155;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-btn:hover {
+            background-color: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .dropdown-arrow {
+            font-size: 10px;
+        }
+
+        /* Contenido del menú desplegable */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 115%;
+            background-color: #ffffff;
+            min-width: 220px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .dropdown-header {
+            padding: 10px 16px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+            background-color: #f8fafc;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .dropdown-menu a {
+            color: #334155;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.15s ease, color 0.15s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f1f5f9;
+            color: #4f46e5;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: #e2e8f0;
+            margin: 4px 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Banner Principal con Imagen */
         .hero-banner {
             position: relative;
             width: calc(100% - 80px);
@@ -122,8 +217,39 @@
 
     <!-- Menú Superior -->
     <nav class="navbar">
-        <h1>Sistema de Gestión de Activos</h1>
-        <div class="actions">
+        <!-- Lado Izquierdo: Menú Desplegable + Título -->
+        <div class="nav-left">
+            <div class="dropdown">
+                <button class="dropdown-btn" id="dropdownToggle">
+                    <span>☰ Menú</span>
+                    <span class="dropdown-arrow">▼</span>
+                </button>
+                
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <div class="dropdown-header">Equipos y Catálogos</div>
+                    <a href="#">Ver Inventario</a>
+                    <a href="#">Nuevo Equipo</a>
+                    <a href="#">Nueva Marca</a>
+                    <a href="#">Nuevo Modelo</a>
+                    <a href="#">Nueva Categoría</a>
+
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-header">Personal</div>
+                    <a href="#">Empleados</a>
+                    <a href="#">Puestos</a>
+
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-header">Gestión</div>
+                    <a href="#">Mantenimiento</a>
+                    <a href="#">Reportería</a>
+                </div>
+            </div>
+
+            <h1>Sistema de Gestión de Activos</h1>
+        </div>
+
+        <!-- Lado Derecho: Botón de Nuevo Usuario y Cerrar Sesión -->
+        <div class="nav-right">
             <a href="{{ route('usuarios.create') }}" class="btn btn-primary">+ Nuevo Usuario</a>
             
             <form action="{{ route('logout') }}" method="POST" style="display:inline;">
@@ -145,6 +271,23 @@
         <h2>Control y Administración de Equipos</h2>
         <p>Gestiona los activos de cómputo, licencias y usuarios de tu organización de forma eficiente.</p>
     </div>
+
+    <!-- Script para abrir/cerrar el menú desplegable -->
+    <script>
+        const toggleBtn = document.getElementById('dropdownToggle');
+        const menu = document.getElementById('dropdownMenu');
+
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!menu.contains(e.target) && !toggleBtn.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+        });
+    </script>
 
 </body>
 </html>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MarcaController;
 
 Route::get('/', function () {
    return view('auth.login');
@@ -23,6 +24,11 @@ Route::middleware('auth')->group(function () {
 
     // Cerrar sesión
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+    //Rutas para nueva marca
+    Route::get('/marcas/nueva', [MarcaController::class, 'create'])->name('marcas.create');
+    Route::post('/marcas/guardar', [MarcaController::class, 'store'])->name('marcas.store');
 });
 
 

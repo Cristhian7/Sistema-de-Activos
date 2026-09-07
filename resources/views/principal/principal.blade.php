@@ -229,7 +229,9 @@
                     <div class="dropdown-header">Equipos y Catálogos</div>
                     <a href="#">Ver Inventario</a>
                     <a href="#">Nuevo Equipo</a>
-                    <a href="#">Nueva Marca</a>
+                    <!--<a href="#">Nueva Marca</a>-->
+                    <!--ruta de nueva marca-->
+                    <a href="{{ route('marcas.create') }}">Nueva Marca</a>
                     <a href="#">Nuevo Modelo</a>
                     <a href="#">Nueva Categoría</a>
 

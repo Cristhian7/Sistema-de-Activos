@@ -11,7 +11,13 @@ class EquipoController extends Controller
     // Mostrar lista y formulario para crear/editar
     public function index(Request $request)
     {
-        $equipos = Equipo::all();
+        // Traemos los equipos uniendo modelo y marca a través de id_modelo
+        $equipos = DB::table('equipo')
+            ->leftJoin('modelo', 'equipo.id_modelo', '=', 'modelo.id_modelo')
+            ->leftJoin('marca', 'modelo.id_marca', '=', 'marca.id_marca')
+            ->select('equipo.*', 'modelo.modelo as nombre_modelo', 'marca.marca as nombre_marca')
+            ->get();
+
         $equipoEditar = null;
 
         if ($request->has('editar')) {
@@ -19,12 +25,17 @@ class EquipoController extends Controller
         }
 
         // Tablas auxiliares para llenar los combobox / selects
-        // Ajusta las tablas según tus nombres reales en la BD
         $afiliados  = DB::table('afiliado')->get();
         $categorias = DB::table('categoria')->get();
         $empleados  = DB::table('empleados')->get();
         $estados    = DB::table('estado')->get();
-        $modelos    = DB::table('modelo')->get();
+
+        // Cargar modelos junto a su marca correspondiente para el select
+        $modelos = DB::table('modelo')
+            ->leftJoin('marca', 'modelo.id_marca', '=', 'marca.id_marca')
+            ->select('modelo.id_modelo', 'modelo.modelo', 'marca.marca')
+            ->orderBy('marca.marca', 'asc')
+            ->get();
 
         return view('principal.equipo', compact(
             'equipos',
@@ -35,30 +46,41 @@ class EquipoController extends Controller
             'estados',
             'modelos'
         ));
-        
     }
 
     // Guardar nuevo registro
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'nombre_equipo' => 'required|string|max:150',
             'tipo_equipo'   => 'required|string|max:100',
             'cod_contable'  => 'nullable|string|max:50',
             'cod_ti'        => 'nullable|string|max:50',
-            'imagen'        => 'nullable|image|max:2048', // Máximo 2MB
-            'valor'         => 'nullable|numeric|max:999999.99',
+            'tag'           => 'nullable|string|max:100',
+            'ip'            => 'nullable|string|max:50',
+            'cpu'           => 'nullable|string|max:100',
+            'ram'           => 'nullable|string|max:50',
+            'disco'         => 'nullable|string|max:100',
+            'usuario'       => 'nullable|string|max:100',
+            'password'      => 'nullable|string|max:100',
+            'ec'            => 'nullable|string|max:100',
+            'referencia'    => 'nullable|string|max:150',
+            'valor'         => 'nullable|numeric',
             'fecha_compra'  => 'nullable|date',
+            'id_afiliado'   => 'nullable',
+            'id_categoria'  => 'nullable',
+            'id_empleado'   => 'nullable',
+            'id_estado'     => 'nullable',
+            'id_modelo'     => 'required|exists:modelo,id_modelo', // El modelo define la marca
+            'descripcion'   => 'nullable|string',
         ]);
 
-        $data = $request->except(['_token', 'imagen']);
-
-        // Tratamiento de la imagen para campo LONGBLOB
+        // Asignación de la imagen LONGBLOB si se sube un archivo
         if ($request->hasFile('imagen')) {
-            $data['imagen'] = file_get_contents($request->file('imagen')->getRealPath());
+            $validated['imagen'] = file_get_contents($request->file('imagen')->getRealPath());
         }
 
-        Equipo::create($data);
+        Equipo::create($validated);
 
         return redirect()->route('equipo.index')->with('success', 'Equipo registrado con éxito.');
     }
@@ -76,14 +98,30 @@ class EquipoController extends Controller
 
         $request->validate([
             'nombre_equipo' => 'required|string|max:150',
+            'tipo_equipo'   => 'required|string|max:100',
             'cod_contable'  => 'nullable|string|max:50',
             'cod_ti'        => 'nullable|string|max:50',
-            'imagen'        => 'nullable|image|max:2048',
+            'tag'           => 'nullable|string|max:100',
+            'ip'            => 'nullable|string|max:50',
+            'cpu'           => 'nullable|string|max:100',
+            'ram'           => 'nullable|string|max:50',
+            'disco'         => 'nullable|string|max:100',
+            'usuario'       => 'nullable|string|max:100',
+            'password'      => 'nullable|string|max:100',
+            'ec'            => 'nullable|string|max:100',
+            'referencia'    => 'nullable|string|max:150',
             'valor'         => 'nullable|numeric',
             'fecha_compra'  => 'nullable|date',
+            'id_afiliado'   => 'nullable',
+            'id_categoria'  => 'nullable',
+            'id_empleado'   => 'nullable',
+            'id_estado'     => 'nullable',
+            'id_modelo'     => 'required|exists:modelo,id_modelo',
+            'descripcion'   => 'nullable|string',
+            'imagen'        => 'nullable|image|max:2048',
         ]);
 
-        $data = $request->except(['_token', '_method', 'imagen']);
+        $data = $request->except(['_token', '_method', 'imagen', 'id_marca']);
 
         // Si se sube una nueva imagen, reemplaza el BLOB
         if ($request->hasFile('imagen')) {

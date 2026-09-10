@@ -10,7 +10,8 @@ use App\Http\Controllers\PuestoController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\TipoMantenimientoController;
 use App\Http\Controllers\EquipoController;
-
+use App\Http\Controllers\MantenimientoController;
+use App\Http\Controllers\conocimientoController;
 
 Route::get('/', function () {
    return view('auth.login');
@@ -80,6 +81,25 @@ Route::middleware('auth')->group(function () {
     Route::put('/equipo/{id}', [EquipoController::class, 'update'])->name('equipo.update');
     Route::delete('/equipo/{id}', [EquipoController::class, 'destroy'])->name('equipo.destroy');
     Route::get('/equipo/{id}/imagen', [EquipoController::class, 'mostrarImagen'])->name('equipo.imagen');
+
+    // Rutas para Inventario
+    Route::get('/inventario', [App\Http\Controllers\InventarioController::class, 'index'])->name('inventario.index');
+
+    // Rutas para Mantenimiento
+    Route::get('/mantenimiento', [MantenimientoController::class, 'index'])->name('mantenimiento.index');
+    Route::get('/mantenimiento/nuevo', [MantenimientoController::class, 'create'])->name('mantenimiento.create');
+    Route::post('/mantenimiento/guardar', [MantenimientoController::class, 'store'])->name('mantenimiento.store');
+    Route::get('/mantenimiento/{id}/editar', [MantenimientoController::class, 'edit'])->name('mantenimiento.edit');
+    Route::put('/mantenimiento/{id}/actualizar', [MantenimientoController::class, 'update'])->name('mantenimiento.update');
+    Route::delete('/mantenimiento/{id}/eliminar', [MantenimientoController::class, 'destroy'])->name('mantenimiento.destroy');  
+
+
+    // Rutas para Conocimiento
+    Route::get('/conocimientos', [ConocimientoController::class, 'index'])->name('conocimiento.index');
+
+    // Ruta para generar PDF de mantenimiento
+    Route::get('/mantenimiento/pdf/{id}', [ConocimientoController::class, 'generarPdf'])->name('mantenimiento.pdf'); 
+
 
 });
 

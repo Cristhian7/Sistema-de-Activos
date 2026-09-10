@@ -227,7 +227,7 @@
                 
                 <div class="dropdown-menu" id="dropdownMenu">
                     <div class="dropdown-header">Equipos y Catálogos</div>
-                    <a href="#">Ver Inventario</a>
+                    <a href="{{ route('inventario.index') }}">Ver Inventario</a>
                     <a href="{{ route('equipo.index') }}">Nuevo Equipo</a>
                     <a href="{{ route('marcas.create') }}">Nueva Marca</a>
                     <a href="{{ route('modelos.create') }}">Nuevo Modelo</a>
@@ -240,9 +240,12 @@
 
                     <div class="dropdown-divider"></div>
                     <div class="dropdown-header">Gestión</div>
-                    <a href="#">Mantenimiento</a>
+                    <a href="{{ route('mantenimiento.index') }}">Nuevo Mantenimiento</a>
+                    <a href="#">Nuevo Dictamen</a>
                       <a href="{{ route('tipo_mantenimiento.create') }}"> Tipo de Mantenimiento</a>
-                    <a href="#">Reportería</a>
+                      <div class="dropdown-header">Reportería</div>
+                     <a href="{{ route('conocimiento.index') }}">Conocimientos / Traslados</a>
+                    <a href="#">Bajas</a>
                 </div>
             </div>
 

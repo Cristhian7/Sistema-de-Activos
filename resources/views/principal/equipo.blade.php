@@ -373,16 +373,17 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="id_modelo">Modelo</label>
+                        <label for="id_modelo">Modelo / Marca</label>
                         <select name="id_modelo" id="id_modelo">
-                            <option value="">-- Seleccionar --</option>
+                            <option value="">-- Seleccionar Modelo --</option>
                             @foreach ($modelos as $modelo)
-                            @php
-                                $idMod = $modelo->id_modelo ?? $modelo->id; 
-                                $nombreMod = $modelo->nombre ?? $modelo->nombre_modelo ?? $modelo->modelo ?? $idMod;
-                            @endphp
-                                <option value="{{ $modelo->id_modelo }}" {{ old('id_modelo', $equipoEditar->id_modelo ?? '') == $modelo->id_modelo ? 'selected' : '' }}>
-                                    {{ $nombreMod}}
+                                @php
+                                    $idMod = $modelo->id_modelo ?? $modelo->id; 
+                                    $nombreMod = $modelo->nombre ?? $modelo->nombre_modelo ?? $modelo->modelo ?? $idMod;
+                                    $nombreMarca = $modelo->marca ?? '';
+                                @endphp
+                                <option value="{{ $idMod }}" {{ old('id_modelo', $equipoEditar->id_modelo ?? '') == $idMod ? 'selected' : '' }}>
+                                    {{ $nombreMarca ? $nombreMarca . ' - ' : '' }}{{ $nombreMod }}
                                 </option>
                             @endforeach
                         </select>
@@ -444,24 +445,22 @@
                             <td>{{ $item->cpu ?? '-' }}</td>
                             <td>{{ $item->ram ?? '-' }}</td>
                             <td>{{ $item->disco ?? '-' }}</td>
-                            <td>
-                                <td style="white-space: nowrap;">
-                                    <!-- Botón Editar -->
-                                     <a href="{{ route('equipo.index', ['editar' => $item->id_equipo ?? $item->id]) }}" class="btn-edit"
-                                     style="text-decoration: none; color: #2563eb; font-weight: 500; margin-right: 8px;">Editar </a>
+                            <td style="white-space: nowrap;">
+                                <!-- Botón Editar -->
+                                <a href="{{ route('equipo.index', ['editar' => $item->id_equipo ?? $item->id]) }}" class="btn-edit"
+                                style="text-decoration: none; color: white; background-color: #f59e0b; padding: 6px 12px; border-radius: 6px; font-weight: 500; margin-right: 8px;">Editar</a>
 
-                                     <!-- Botón Eliminar -->
-                                      <form action="{{ route('equipo.destroy', $item->id_equipo ?? $item->id) }}" method="POST"
-                                      style="display: inline;" onsubmit="return confirm('¿Está seguro de eliminar este equipo?');">
-                                      @csrf
-                                      @method('DELETE')
-                                        <button type="submit"
-                                        style="background-color: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 500;"> Eliminar </button>
-                                       </form>
-                                    </td>
-                                </td>
+                                <!-- Botón Eliminar -->
+                                <form action="{{ route('equipo.destroy', $item->id_equipo ?? $item->id) }}" method="POST"
+                                style="display: inline;" onsubmit="return confirm('¿Está seguro de eliminar este equipo?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                    style="background-color: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 500;">Eliminar</button>
+                                </form>
+                            </td>
                         </tr>
-                        @empty
+                    @empty
                         <tr>
                             <td colspan="9" style="text-align: center; color: #94a3b8;">No hay equipos registrados.</td>
                         </tr>

@@ -12,6 +12,8 @@ use App\Http\Controllers\TipoMantenimientoController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\MantenimientoController;
 use App\Http\Controllers\conocimientoController;
+use App\Http\Controllers\BajaEquipoController;
+
 
 Route::get('/', function () {
    return view('auth.login');
@@ -98,9 +100,25 @@ Route::middleware('auth')->group(function () {
     Route::get('/conocimientos', [ConocimientoController::class, 'index'])->name('conocimiento.index');
 
     // Ruta para generar PDF de mantenimiento
-    Route::get('/mantenimiento/pdf/{id}', [ConocimientoController::class, 'generarPdf'])->name('mantenimiento.pdf'); 
+    Route::get('/mantenimiento/pdf/{id}', [ConocimientoController::class, 'generarPdf'])->name('mantenimiento.pdf');  
 
+    // Rutas para Guardar una nueva Bajas
+    //Route::get('/bajas', [BajaController::class, 'index'])->name('bajas.index');
+    //Route::get('/bajas/crear', [BajaController::class, 'create'])->name('baja.create');
+    //Route::post('/bajas/guardar', [BajaController::class, 'store'])->name('baja.store');
+    //Route::put('/bajas/actualizar/{id}', [BajaController::class, 'update'])->name('baja.update');
 
+    //Rutas para Baja Equipo
+    Route::get('/baja-equipo', [BajaEquipoController::class, 'index'])->name('baja.index');
+    Route::post('/baja-equipo', [BajaEquipoController::class, 'store'])->name('baja.store');
+    Route::put('/baja-equipo/{id}', [BajaEquipoController::class, 'update'])->name('baja.update');
+    Route::delete('/baja-equipo/{id}', [BajaEquipoController::class, 'destroy'])->name('baja.destroy');
+
+    //Ruta para listado de bajas
+    Route::get('/bajas', [BajaEquipoController::class, 'listado'])->name('bajas.index');
+
+    // Ruta para generar PDF de Bajas
+    Route::get('/baja/{id}/pdf', [BajaEquipoController::class, 'generarPdf'])->name('baja.pdf');
 });
 
 

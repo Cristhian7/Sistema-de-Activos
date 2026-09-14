@@ -241,11 +241,13 @@
                     <div class="dropdown-divider"></div>
                     <div class="dropdown-header">Gestión</div>
                     <a href="{{ route('mantenimiento.index') }}">Nuevo Mantenimiento</a>
-                    <a href="#">Nuevo Dictamen</a>
+                  <a href="{{ route('baja.index') }}">Nueva Baja</a>
                       <a href="{{ route('tipo_mantenimiento.create') }}"> Tipo de Mantenimiento</a>
+
                       <div class="dropdown-header">Reportería</div>
                      <a href="{{ route('conocimiento.index') }}">Conocimientos / Traslados</a>
-                    <a href="#">Bajas</a>
+                     <a href="{{ route('bajas.index') }}">Bajas</a>
+                  
                 </div>
             </div>
 

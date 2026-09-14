@@ -2,10 +2,10 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Reporte Técnico - Ticket N° {{ $mantenimiento->no_ticket ?? $mantenimiento->id_mante }}</title>
+    <title>Reporte de Mantenimiento - Ticket N° {{ $mantenimiento->no_ticket ?? $mantenimiento->id_mante }}</title>
     <style>
         @page {
-            size: letter portrait; /* Define tamaño carta (8.5in x 11in) vertical */
+            size: letter portrait;
             margin: 12mm 15mm;
         }
         body {
@@ -18,19 +18,19 @@
             width: 100%;
             border-bottom: 2px solid #1e40af;
             padding-bottom: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         .header table {
             width: 100%;
         }
         .title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             color: #1e40af;
             text-transform: uppercase;
         }
         .subtitle {
-            font-size: 10px;
+            font-size: 9.5px;
             color: #6b7280;
         }
         .ticket-box {
@@ -46,17 +46,17 @@
             font-size: 11px;
             padding: 5px 8px;
             border-left: 4px solid #1e40af;
-            margin-top: 12px;
-            margin-bottom: 8px;
+            margin-top: 10px;
+            margin-bottom: 6px;
             text-transform: uppercase;
         }
         table.table-data {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         table.table-data td {
-            padding: 5px 8px;
+            padding: 4px 8px;
             border: 1px solid #e5e7eb;
             font-size: 10.5px;
         }
@@ -72,54 +72,50 @@
         .text-box {
             border: 1px solid #e5e7eb;
             background-color: #fafafa;
-            padding: 8px 10px;
-            min-height: 45px;
+            padding: 6px 10px;
+            min-height: 35px;
             border-radius: 3px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             white-space: pre-line;
         }
-        .photos-table {
+        /* Estilos para las fotos antes y después */
+        .table-photos {
             width: 100%;
-            margin-top: 10px;
             border-collapse: collapse;
+            margin-top: 5px;
+            margin-bottom: 8px;
         }
-        .photos-table td {
+        .table-photos td {
             width: 50%;
             text-align: center;
-            vertical-align: top;
-            padding: 5px;
-        }
-        .photo-card {
-            border: 1px solid #d1d5db;
+            border: 1px solid #e5e7eb;
             padding: 6px;
-            border-radius: 4px;
-            background-color: #ffffff;
+            background-color: #fafafa;
+            vertical-align: top;
         }
-        .photo-card img {
-            max-width: 100%;
-            max-height: 170px;
-            object-fit: contain;
-            border-radius: 2px;
-        }
-        .photo-label {
+        .photo-title {
             font-weight: bold;
-            font-size: 10.5px;
-            margin-bottom: 6px;
             color: #374151;
+            margin-bottom: 4px;
+            font-size: 10.5px;
         }
-        .no-photo {
-            color: #9ca3af;
-            font-style: italic;
-            padding: 30px 0;
+        .maintenance-img {
+            max-width: 100%;
+            height: 200px; /* Altura fija para mantener el diseño ordenado */
+            object-fit: contain;
+            border: 1px solid #d1d5db;
+            background-color: #ffffff;
+            padding: 2px;
         }
         .signatures {
             width: 100%;
-            margin-top: 35px;
+            margin-top: 25px;
         }
         .signatures td {
             width: 50%;
             text-align: center;
             vertical-align: bottom;
+            height: 50px;
         }
         .line {
             border-top: 1px solid #4b5563;
@@ -142,12 +138,11 @@
 </head>
 <body>
 
-    <!-- Encabezado -->
     <div class="header">
         <table>
             <tr>
                 <td>
-                    <div class="title">Dictamen Técnico de Mantenimiento</div>
+                    <div class="title">Reporte de Mantenimiento</div>
                     <div class="subtitle">Soporte Técnico e Infraestructura Tecnológica</div>
                 </td>
                 <td class="ticket-box">
@@ -157,117 +152,120 @@
         </table>
     </div>
 
-    <!-- Sección 1: Datos del Equipo -->
     <div class="section-header">1. Información del Equipo</div>
     <table class="table-data">
         <tr>
-            <td class="label">Cód. Equipo:</td>
-            <td class="value">
-                {{ $mantenimiento->cod_contable ?? 'N/A' }}
-            </td>
+            <td class="label">Cód. Contable:</td>
+            <td class="value">{{ $mantenimiento->cod_contable ?? 'N/A' }}</td>
             <td class="label">Nombre Equipo:</td>
-            <td class="value">
-                {{ $mantenimiento->nombre_equipo ?? $mantenimiento->equipo ?? 'N/A' }}
-            </td>
+            <td class="value">{{ $mantenimiento->nombre_equipo ?? 'N/A' }}</td>
         </tr>
         <tr>
             <td class="label">Marca:</td>
-            <td class="value">
-                {{ $mantenimiento->nombre_marca ?? $mantenimiento->marca ?? 'N/A' }}
-            </td>
+            <td class="value">{{ $mantenimiento->marca ?? 'N/A' }}</td>
             <td class="label">Modelo:</td>
-            <td class="value">
-                {{ $mantenimiento->nombre_modelo ?? $mantenimiento->modelo ?? 'N/A' }}
-            </td>
+            <td class="value">{{ $mantenimiento->modelo ?? 'N/A' }}</td>
         </tr>
         <tr>
-            <td class="label">TAG / Serie:</td>
-            <td class="value">
-                {{ $mantenimiento->serie ?? $mantenimiento->tag ?? $mantenimiento->service_tag ?? 'N/A' }}
-            </td>
-            <td class="label">Afiliado / Sede:</td>
-            <td class="value">
-                {{ $mantenimiento->ubicacion ?? $mantenimiento->afiliado_nombre ?? $mantenimiento->afiliado ?? 'N/A' }}
-            </td>
+            <td class="label">Serie / TAG:</td>
+            <td class="value">{{ $mantenimiento->serie ?? 'N/A' }}</td>
+            <td class="label">Ubicación:</td>
+            <td class="value">{{ $mantenimiento->ubicacion ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <td class="label">Estado:</td>
+            <td colspan="3">{{ $mantenimiento->estado_nombre ?? 'N/A' }}</td>
         </tr>
     </table>
 
-    <!-- Sección 2: Registro del Mantenimiento -->
     <div class="section-header">2. Detalle del Mantenimiento</div>
     <table class="table-data">
         <tr>
             <td class="label">Tipo Mantenimiento:</td>
-            <td class="value">{{ $mantenimiento->tipo_mante ?? $mantenimiento->tipo_mantenimiento ?? 'N/A' }}</td>
-            <td class="label">Técnico Responsable:</td>
-            <td class="value">{{ $mantenimiento->tecnico ?? $mantenimiento->usuario_registro ?? 'N/A' }}</td>
+            <td class="value">{{ $mantenimiento->tipo_mante ?? 'N/A' }}</td>
+            <td class="label">Técnico:</td>
+            <td class="value">{{ $mantenimiento->tecnico ?? 'N/A' }}</td>
         </tr>
         <tr>
             <td class="label">Fecha Inicio:</td>
-            <td class="value">
-                {{ $mantenimiento->fecha_inicio ? date('d/m/Y', strtotime($mantenimiento->fecha_inicio)) : 'N/A' }}
-            </td>
+            <td class="value">{{ $mantenimiento->fecha_inicio ? date('d/m/Y', strtotime($mantenimiento->fecha_inicio)) : 'N/A' }}</td>
             <td class="label">Fecha Final:</td>
-            <td class="value">
-                {{ $mantenimiento->fecha_final ? date('d/m/Y', strtotime($mantenimiento->fecha_final)) : 'N/A' }}
+            <td class="value">{{ $mantenimiento->fecha_final ? date('d/m/Y', strtotime($mantenimiento->fecha_final)) : 'N/A' }}</td>
+        </tr>
+    </table>
+
+    <div class="section-header">3. Descripción del Trabajo</div>
+    <div class="text-box">
+        {{ $mantenimiento->descripcion ?? 'Sin observaciones registradas.' }}
+    </div>
+
+    <!-- SECCIÓN DE EVIDENCIA FOTOGRÁFICA -->
+    <div class="section-header">4. Evidencia Fotográfica</div>
+    <table class="table-photos">
+        <tr>
+            <td>
+                <div class="photo-title">Foto Antes</div>
+                @if(!empty($mantenimiento->foto_antes))
+                    @php
+                        // Convierte los datos binarios BLOB directamente a Base64
+                        $base64Antes = base64_encode($mantenimiento->foto_antes);
+                    @endphp
+                    <img src="data:image/jpeg;base64,{{ $base64Antes }}" class="maintenance-img">
+                @else
+                    <div style="color: #9ca3af; padding: 25px 0; font-size: 10px;">Sin imagen registrada</div>
+                @endif
+            </td>
+            <td>
+                <div class="photo-title">Foto Después</div>
+                @if(!empty($mantenimiento->foto_despues))
+                    @php
+                        // Convierte los datos binarios BLOB directamente a Base64
+                        $base64Despues = base64_encode($mantenimiento->foto_despues);
+                    @endphp
+                    <img src="data:image/jpeg;base64,{{ $base64Despues }}" class="maintenance-img">
+                @else
+                    <div style="color: #9ca3af; padding: 25px 0; font-size: 10px;">Sin imagen registrada</div>
+                @endif
             </td>
         </tr>
     </table>
 
-    <!-- Sección 3: Descripción del Trabajo -->
-    <div class="section-header">3. Descripción del Trabajo Realizado</div>
-    <div class="text-box">
-        {{ $mantenimiento->descripcion ?? $mantenimiento->diagnostico ?? 'Sin descripción registrada.' }}
-    </div>
-
-    <!-- Sección 4: Fotografías -->
-    @if($fotoAntesBase64 || $fotoDespuesBase64)
-        <div class="section-header">4. Evidencia Fotográfica</div>
-        <table class="photos-table">
-            <tr>
-                <td>
-                    <div class="photo-card">
-                        <div class="photo-label">ANTES</div>
-                        @if($fotoAntesBase64)
-                            <img src="{{ $fotoAntesBase64 }}" alt="Foto Antes">
-                        @else
-                            <div class="no-photo">Sin foto previa</div>
-                        @endif
-                    </div>
-                </td>
-                <td>
-                    <div class="photo-card">
-                        <div class="photo-label">DESPUÉS</div>
-                        @if($fotoDespuesBase64)
-                            <img src="{{ $fotoDespuesBase64 }}" alt="Foto Después">
-                        @else
-                            <div class="no-photo">Sin foto posterior</div>
-                        @endif
-                    </div>
-                </td>
-            </tr>
-        </table>
-    @endif
-
-    <!-- Firmas -->
     <table class="signatures">
         <tr>
             <td>
+                <!-- Si la firma del técnico está guardada en la BD (BLOB), se muestra aquí -->
+                @if(!empty($mantenimiento->firma_tecnico))
+                    @php
+                        $base64Firma = base64_encode($mantenimiento->firma_tecnico);
+                    @endphp
+                    <img src="data:image/jpeg;base64,{{ $base64Firma }}" class="signature-img"><br>
+                @else
+                    <!-- Espacio en blanco si firmarán a mano -->
+                    <div style="height: 35px;"></div>
+                @endif
+                
                 <div class="line"></div>
-                <strong>{{ $mantenimiento->tecnico ?? 'Técnico Responsable' }}</strong><br>
-                <span>Soporte Técnico</span>
+                <strong>Técnico Responsable</strong><br>
+                <span>{{ $mantenimiento->tecnico ?? 'Soporte Técnico' }}</span>
             </td>
             <td>
+                <!-- Si tienes firma de aprobación o jefatura en la BD -->
+                @if(!empty($mantenimiento->firma_jefatura))
+                    @php
+                        $base64Jefatura = base64_encode($mantenimiento->firma_jefatura);
+                    @endphp
+                    <img src="data:image/jpeg;base64,{{ $base64Jefatura }}" class="signature-img"><br>
+                @else
+                    <!-- Espacio en blanco si firmarán y sellarán a mano -->
+                    <div style="height: 35px;"></div>
+                @endif
+
                 <div class="line"></div>
-                <strong>Conformidad del Usuario</strong><br>
-                <span>Nombre y Firma</span>
+                <strong>Aprobación / Jefatura</strong><br>
+                <span>Firma y Sello</span>
             </td>
         </tr>
     </table>
-
-    <!-- Pie de página fijo -->
-    <div class="footer">
-        Documento de control interno generado el {{ date('d/m/Y H:i') }}.
-    </div>
 
 </body>
 </html>
